@@ -1,0 +1,92 @@
+<template>
+    <div class="top-level-flex-container">
+        <div data-id="members" class="member-section-full slds-scrollable">
+            <template for:each={accountTeam} for:item="member">
+                <div class="member slds-m-bottom_small" data-id={member.UserId} key={member.Id} onclick={filterPostsByUser}>
+                    <div>
+                        <lightning-avatar data-id={member.UserId} class="avatar-reduced" src={member.User.FullPhotoUrl} size="medium" variant="circle"></lightning-avatar>
+                    </div>
+                    <div class="member-detail slds-border_bottom slds-p-top_x-small" key={member.Id}>
+                        <p class="slds-text-heading_small slds-p-horizontal_x-small">{member.User.Name}</p>
+                        <p class="slds-text-heading--label-normal slds-p-around_xxx-small">{member.TeamMemberRole}</p><p class="slds-text-heading--label-normal" if:true={member.Region__c}>•</p>
+                        <p if:true={member.Region__c} class="slds-text-heading--label-normal slds-p-around_xxx-small">{member.Region__r.Name}</p><p class="slds-text-heading--label-normal" if:true={member.Territory__c}>•</p>
+                        <p if:true={member.Territory__c} class="slds-text-heading--label-normal slds-p-around_xxx-small">{member.Territory__r.Name}</p>
+                    </div>
+                </div>
+            </template>
+        </div>
+        <div data-id="publisher" class="chatter-publisher-init" onscroll={scrollActions}>
+            <div class="toggle slds-hidden">
+                <lightning-icon size="small" class="slds-m-around_small filter opp-icon opp-icon-selected" onclick={togglePostType} icon-name="standard:opportunity"></lightning-icon>
+                <lightning-icon size="small" class="slds-m-around_small filter" onclick={togglePostType} icon-name="utility:task"></lightning-icon>
+            </div>
+            <div>
+                <template for:each={filteredPosts} for:item="dateGroup">
+                    <div key={dateGroup.Date} class="date-text">
+                        <p key={dateGroup.Date}>{dateGroup.Date}</p>
+                    </div>
+                    <div class="filtered-posts" key={dateGroup.Date}>
+                        <template for:each={dateGroup.Wrappers} for:item="post">
+                            <div class="chatter-post-card" key={post}>
+                                <div slot="title" class="slds-text-align_left">
+                                    <div class="tracked-change-header">
+                                        <div style="width: 15px; height: 17px;" class="slds-m-top_xx-small slds-m-left_xx-small slds-m-right_small slds-bottom_small">
+                                            <lightning-icon size="small" style="float:left;" icon-name={post.IconName}></lightning-icon>
+                                        </div>
+                                        <p if:true={post.Parent} class="slds-p-top_x-small slds-text-title slds-truncate slds-border_bottom" onclick={goToRecord} data-id={post.ParentId}>{post.Parent.Name}</p>  
+                                        <p if:true={post.Subject} class="slds-p-top_x-small slds-text-title slds-truncate slds-border_bottom" onclick={goToRecord} data-id={post.RecordId}>{post.Subject}</p>  
+                                    </div>
+                                    <div style="display:flex; overflow:scroll; flex-wrap: wrap; width: 75%;" class="slds-m-around_small">
+                                        <div if:true={post.What} style="display: flex;" class="slds-m-right_x-small">
+                                            <div class="slds-m-right_xx-small">
+                                                <lightning-icon size="x-small" icon-name={post.WhatIdIconName}></lightning-icon>
+                                            </div>
+                                            <p class="slds-text-title slds-p-top_xx-small" onclick={goToRecord} data-id={post.What.Id}>{post.What.Name}</p>
+                                        </div>
+                                        <div if:true={post.Who} style="display: flex;">
+                                            <div class="slds-m-right_xx-small">
+                                                <lightning-icon size="x-small" icon-name="standard:contact"></lightning-icon>
+                                            </div>
+                                            <p class="slds-text-title slds-p-top_xx-small" onclick={goToRecord} data-id={post.Who.Id}>{post.Who.Name}</p> 
+                                        </div>
+                                        <div if:true={post.Status} style="display: flex;" class="slds-m-left_x-small">
+                                            <div class="slds-m-right_xx-small">
+                                                <lightning-button-icon size="x-small" tooltip="Status" icon-name="action:update_status"></lightning-button-icon>
+                                            </div>
+                                            <p class="slds-text-title slds-p-top_xx-small" onclick={goToRecord} data-id={post.Who.Id}>{post.Status}</p> 
+                                        </div>
+                                        <div if:true={post.StartTime} style="display: flex;" class="slds-m-right_x-small">
+                                            <div class="slds-m-right_xx-small">
+                                                <lightning-icon size="x-small" icon-name="standard:date_time"></lightning-icon>
+                                            </div>
+                                            <p class="slds-text-title slds-p-top_xx-small" onclick={goToRecord} data-id={post.Who.Id}>{post.StartTime} - {post.EndTime}</p> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-text-align_left">
+                                    <template for:each={post.TrackedChanges} for:item="feedTrackedChange" if:true={post.TrackedChanges}>
+                                        <div key={feedTrackedChange} class="tracked-change"> 
+                                            <div class="tracked-change-field">
+                                                <b>Changed</b>
+                                                <p> <span class="slds-text-font_monospace">{feedTrackedChange.FieldName}</span></p>
+                                            </div>
+                                            <div class="tracked-change-field">
+                                                <b>Old Value</b>
+                                                <p><span class="slds-text-font_monospace">{feedTrackedChange.OldValue}</span></p>
+                                            </div>
+                                            <div class="tracked-change-field">
+                                                <b>New Value</b>
+                                                <p><span class="slds-text-font_monospace">{feedTrackedChange.NewValue}</span></p>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+    <c-add-account-team if:true={addAccountTeamMembers} account-id={recordId}></c-add-account-team>
+</template>

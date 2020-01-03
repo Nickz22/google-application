@@ -1,0 +1,134 @@
+.top-level-flex-container{
+    display: flex;
+    overflow:hidden;
+    max-height:300px;
+    margin-top: -1.5%;
+}
+
+.toggle{
+    width: 50%; 
+    white-space: nowrap;
+    position: absolute;
+    display: flex;
+    padding-top: .5rem;
+    top: .15rem;
+    right: -2rem; 
+    transition: top .2s ease, right .2s ease;
+}
+.toggle-scroll{
+    top: -.75rem;
+    right: -7rem;
+    transition: top .2s ease, right .2s ease;
+}
+
+lightning-icon.filter:hover{
+    cursor: pointer;
+}
+.opp-icon{
+    background-color: rgba(185, 183, 183, 0.9);
+}
+.opp-icon-selected{
+    background-color: rgba(204, 160, 64, 0.698);
+    transition: background-color .25s ease;
+}
+.task-icon-selected{
+    background-color: rgba(16, 173, 29, 0.667);
+    transition: background-color .25s ease;
+}
+
+.toggle-label{
+    color:rgb(165, 162, 162);
+    padding-top: 1.5%;
+}
+
+.toggle-input{
+    margin-left: -1rem;
+}
+
+.avatar-reduced:hover{
+    cursor: pointer;
+}
+
+.avatar-selected{
+    border: 2px solid green;
+}
+
+.member{
+    display: flex;
+    white-space: nowrap;
+    width: 100%;
+    overflow:visible; 
+}
+.member-detail{
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%
+}
+
+.member-detail.slds-border_bottom:hover{
+    border-bottom-color: black;
+    transition: border-bottom-color .1s ease-in-out;
+    cursor: pointer;
+}
+
+.chatter-publisher-init{
+    width: 0%;
+    transition: width .25s ease;
+}
+
+ .chatter-publisher-open{
+    width:91%;
+    transition: width .25s ease;
+}
+
+.filtered-posts{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 1%;
+    margin-left: 1%;
+    border-left: .25px lightgrey solid;
+}
+
+.chatter-post-card{
+    border-radius: 5%;
+    width: 95%;
+}
+
+ .member-section-full{
+    width: 100%;
+    max-height:300px;
+    transition: width .25s ease;
+}
+
+ .member-section-reduced{
+    width: 9%;
+    max-height:300px;
+    transition: width .25s ease;
+ }
+
+.tracked-change{
+    display: flex;
+} 
+
+.tracked-change-header{
+    display: flex;
+}
+
+.tracked-change-field{
+    margin: 6px;
+    display:inline-block
+}
+
+.date-text{
+    font-size: small;
+    color: rgb(185, 183, 183);
+    padding: 2% 2%;
+}
+
+.slds-text-font_monospace{
+    font-size: x-small;
+}
+
+p.slds-text-title:hover{
+    cursor:pointer;
+}
