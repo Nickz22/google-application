@@ -1,2 +1,2 @@
 # google-application
-repo for application as google software engineer
+This repo has one app I built on my spare time while at WeWork. Its built using the Lightning Web Components framework, a modern front end framework for Salesforce.
